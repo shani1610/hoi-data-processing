@@ -1,12 +1,12 @@
 import os
 import torch
-import roboflow
 import supervision as sv
 import os
-from GroundingDINO.groundingdino.util.inference import Model
+from groundingdino.util.inference import Model
 import cv2
 import supervision as sv
 import tqdm
+import argparse
 
 BOX_TRESHOLD = 0.35
 TEXT_TRESHOLD = 0.25
@@ -43,16 +43,17 @@ def bb_for_image(SOURCE_IMAGE_PATH, CLASS, annotate=False):
     
     return yolo_bbox
 
-def run_on_one_folder(data_folder, class_label):
+def run_on_one_folder(data_folder, class_label, name_of_subject, annotation_output_folder):
     # Iterate through files in the current directory
-    for file in os.listdir(data_folder):
+    for idx, file in enumerate(sorted(os.listdir(data_folder))):
         # Check if the file name matches the pattern "kN_color_W0M.000.jpg"
         if file.startswith("k") and file.endswith(".jpg"):
             # Process the image (perform your desired operation)
             image_path = os.path.join(data_folder, file)
             yolo_bbox = bb_for_image(image_path, CLASS=class_label, annotate=False)
             class_num = get_class_number(class_label, conversion_dict)
-            save_annotations(image_path, yolo_bbox, class_num, "./output")
+            output_path = os.path.join(annotation_output_folder, name_of_subject+str(idx).zfill(4)+'.txt')
+            save_annotations(image_path, yolo_bbox, class_num, annotation_output_folder, output_path)
 
 def convert_to_yolo(bbox, image_width, image_height):
     x1, y1, x2, y2 = bbox
@@ -127,13 +128,14 @@ def draw_bbox(image, bbox, color=(0, 255, 0), thickness=2):
     
     return image
 
-def save_annotations(image_path, yolo_bbox, class_number, output_folder):
+def save_annotations(image_path, yolo_bbox, class_number, output_folder, output_path=None):
     """
     Save annotations (class number and bounding box) to a text file.
     """
     # Construct output file path
-    output_filename = os.path.splitext(os.path.basename(image_path))[0] + ".txt"
-    output_path = os.path.join(output_folder, output_filename)
+    if output_path is None:
+        output_filename = os.path.splitext(os.path.basename(image_path))[0] + ".txt"
+        output_path = os.path.join(output_folder, output_filename)
     
     # Open the file for writing
     with open(output_path, "w") as file:
@@ -179,13 +181,38 @@ def get_class_number(class_label, conversion_dict):
     else:
         return None  # Return None if class label is not found in the dictionary
 
-HOME = os.getcwd()
-CONFIG_PATH = os.path.join(HOME, "GroundingDINO/groundingdino/config/GroundingDINO_SwinT_OGC.py")
-WEIGHTS_PATH = os.path.join(HOME, "weights", "groundingdino_swint_ogc.pth")
-model = Model(model_config_path=CONFIG_PATH, model_checkpoint_path=WEIGHTS_PATH)
+if __name__ == '__main__':
 
-run_on_one_folder("./data/Date01_Sub01_backpack_back_color", ["backpack"])
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        '-f', '--frames_dir', type=str, help='Path of the input video or image folder.')
+    parser.add_argument(
+        '-o', '--object_name', type=str, help='Path of the mask(s) or mask folder.')
+    parser.add_argument(
+        '-a', '--annotation_output_folder', type=str, help='Path of the mask(s) or mask folder.')
+    parser.add_argument(
+        '-n', '--name_of_subject', type=str, help='')    
+    args = parser.parse_args()
 
+    HOME = os.getcwd()
+    CONFIG_PATH = os.path.join(HOME, "GroundingDINO/groundingdino/config/GroundingDINO_SwinT_OGC.py")
+    WEIGHTS_PATH = os.path.join(HOME, "weights", "groundingdino_swint_ogc.pth")
+    model = Model(model_config_path=CONFIG_PATH, model_checkpoint_path=WEIGHTS_PATH)
+
+    # run_on_one_folder("./data/Date01_Sub01_backpack_back_color", ["backpack"])
+    if args.frames_dir is not None:
+        frames_dir = args.frames_dir
+    if args.object_name is not None:
+        object_name = args.object_name 
+    if args.annotation_output_folder is not None:
+        annotation_output_folder = args.annotation_output_folder
+    if args.name_of_subject is not None:
+        name_of_subject = args.name_of_subject 
+    run_on_one_folder(frames_dir, [object_name], name_of_subject, annotation_output_folder)
+
+# we will run: 
+    
+# python create_dataset.py --frames_dir "./data/Date01_Sub01_backpack_back_color/" --object_name "backpack" --name_of_subject "Date01_Sub01_backpack_back" --annotation_output_folder "./data/hoi_dataset/Date01_Sub01_backpack_back/labels/"
 '''
 SOURCE_IMAGE_PATH = f"{HOME}/data/Date01_Sub01_backpack_back_color/k0_color_W48.000.jpg"
 # Extracting the directory name from the path
