@@ -132,6 +132,10 @@ def save_annotations(image_path, yolo_bbox, class_number, output_folder, output_
     """
     Save annotations (class number and bounding box) to a text file.
     """
+    if not os.path.exists(output_folder):
+    # If the directory doesn't exist, create it
+        os.makedirs(output_folder)
+
     # Construct output file path
     if output_path is None:
         output_filename = os.path.splitext(os.path.basename(image_path))[0] + ".txt"
@@ -149,7 +153,7 @@ def save_annotations(image_path, yolo_bbox, class_number, output_folder, output_
 conversion_dict = {
     "backpack": 0,
     "basketball": 1,
-    "boxlarge": 2,
+    "box": 2,
     "boxlong": 3,
     "boxmedium": 4,
     "boxsmall": 5,
