@@ -10,7 +10,7 @@ def organize_files(root_dir, output_color, output_inpaint):
         color_folder = os.path.join(output_color, f"{date_folder}_color")
         inpaint_folder = os.path.join(output_inpaint, f"{date_folder}")
         mask_resized_folder = os.path.join(inpaint_folder, f"{date_folder}_mask_resized")
-        color_resized_folder = os.path.join(inpaint_folder, f"{date_folder}_color_resized")
+        color_resized_folder = os.path.join(inpaint_folder, f"{date_folder}")
 
         os.makedirs(color_folder, exist_ok=True)
         os.makedirs(inpaint_folder, exist_ok=True)
