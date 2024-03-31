@@ -186,7 +186,11 @@ some useful terminal stuff:
 ```
 rm -r data/Date01_Sub01_backpack_back_color
 ```
+```
+pip install --root-user-action=ignore thop>=0.1.1
+```
 current versions that work with ProPainter and GroundingDINO:
+```
 ackage                  Version     Editable project location
 ------------------------ ----------- ------------------------------------------------
 addict                   2.4.0
@@ -264,3 +268,4 @@ urllib3                  2.1.0
 wheel                    0.41.2
 yapf                     0.40.2
 zipp                     3.18.1
+```
