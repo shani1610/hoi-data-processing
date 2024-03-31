@@ -133,6 +133,12 @@ to check corresondenceL
 python check_img_lab_corr.py --img_path "./data/hoi_dataset/Date01_Sub01_backpack_back/images/Date01_Sub01_backpack_back0022.jpg" --lab_path "./data/hoi_dataset/Date01_Sub01_backpack_back/labels/Date01_Sub01_backpack_back0022.txt"
 ```
 
+### Data preperation for Yolo
+
+```
+bash scripts/get_behave.sh
+```
+
 # Training 
 
 ## train-yolov9-object-detection
