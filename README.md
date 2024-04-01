@@ -213,13 +213,22 @@ wget -P ./weights -q https://github.com/WongKinYiu/yolov9/releases/download/v0.1
 ```
 cd yolov9
 
-python train.py \
+python train_dual.py \
 --batch 16 --epochs 25 --img 640 --device 0 --min-items 0 --close-mosaic 15 \
 --data hoi_dataset/data.yaml \
 --weights ./../weights/yolov9-e.pt \
 --cfg models/detect/yolov9-e.yaml \
 --hyp hyp.scratch-high.yaml
 ```
+
+errors and solutions: 
+
+Unable to find a valid cuDNN algorithm to run convolution
+run with --batch 8 --epochs 16 
+
+AttributeError: 'FreeTypeFont' object has no attribute 'getsize'
+need to downgrade Pillow; pip install Pillow==9.5.0
+
 
 some useful terminal stuff:
 ```
