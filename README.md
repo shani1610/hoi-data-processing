@@ -134,6 +134,9 @@ python check_img_lab_corr.py --img_path "./data/hoi_dataset/Date01_Sub01_backpac
 ```
 
 ### Data preperation for Yolo
+```
+python ./sample/dataset_for_yolo.py ./data/hoi_dataset ./yolov9/hoi_dataset
+```
 
 ```
 bash scripts/get_behave.sh
