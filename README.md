@@ -137,6 +137,36 @@ python check_img_lab_corr.py --img_path "./data/hoi_dataset/Date01_Sub01_backpac
 ```
 python ./sample/dataset_for_yolo.py ./data/hoi_dataset ./yolov9/hoi_dataset
 ```
+this will create this hirerchy: 
+```bash
+└── yolov9/
+        └── hoi-dataset/
+            ├── test/
+            │   ├── images/
+            │   │   ├── Date01_Sub01_backpack_back0008.jpg
+            │   │   └── ...
+            │   └── labels/
+            │       ├── Date01_Sub01_backpack_back0008.txt
+            │       └── ...
+            ├── train/
+            │   ├── images
+            │   └── labels
+            ├── valid/
+            │   ├── images
+            │   └── labels
+            └── data.yaml
+```            
+the data.yaml contains this info:
+```
+names:
+  0: backpack
+  1: basketball
+  2: box
+nc: 3
+test: hoi_dataset/train/images
+train: hoi_dataset/train/images
+val: hoi_dataset/valid/images
+```
 
 ```
 bash scripts/get_behave.sh
@@ -278,3 +308,10 @@ wheel                    0.41.2
 yapf                     0.40.2
 zipp                     3.18.1
 ```
+
+# Acknowledgements
+
+For the tree i used:
+(https://tree.nathanfriend.io/)[https://tree.nathanfriend.io/]
+
+
