@@ -237,6 +237,10 @@ rm -r data/Date01_Sub01_backpack_back_color
 ```
 pip install --root-user-action=ignore thop>=0.1.1
 ```
+```
+file ./hoi_dataset/test/images/Date01_Sub01_basketball0000.jpg
+```
+it gives us the size in our case: 432x240
 current versions that work with ProPainter and GroundingDINO:
 ```
 ackage                  Version     Editable project location
