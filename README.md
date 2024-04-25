@@ -322,6 +322,24 @@ yapf                     0.40.2
 zipp                     3.18.1
 ```
 
+## Intercap dataset 
+
+register and download the data from [here](https://intercap.is.tue.mpg.de/)
+the dataset inludes interactions with soccer ball, suitcase, toolbox, tennis racquet, chair (move, pick up, sit), umbrella, cup, skateboard, bottle. 
+
+the dataset extract into the data folder of the repository. 
+
+then run to get the videos and object masks (there is a default input path, output path and resize factor but these can be changed). 
+
+```
+python ./sample/intercap4propainter.py
+```
+
+then run the script ```./scripts/ppainter_inference.sh```
+
+if you make any changes run before that: ```chmod +x ./scripts/ppainter_inference.sh```
+
+
 # Acknowledgements
 
 For the tree i used:
