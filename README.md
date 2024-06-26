@@ -1,3 +1,6 @@
+
+![frame0000](https://github.com/shani1610/hoi-data-processing/assets/56839113/a9afe38a-8dea-4fa1-934d-39c67410f719)
+
 # HOI Data Processing 
 human-object interaction video dataset processing
 including object detection and object removal using inpaiting
